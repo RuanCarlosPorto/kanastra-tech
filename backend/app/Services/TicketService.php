@@ -2,12 +2,22 @@
 
 namespace App\Services;
 
+use App\Mail\TicketMail;
 use DateTime;
 use OpenBoleto\Banco\BancoDoBrasil;
 use OpenBoleto\Agente;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Mail;
 
 class TicketService
 {
+    public function convertHtmlToPdf($html)
+    {
+        $pdf = Pdf::loadHTML($html);
+        return $pdf->download()->getOriginalContent();
+    }
+
     public function generate($csv)
     {
         $csvHeader = array_shift($csv);
@@ -28,15 +38,20 @@ class TicketService
                 'convenio' => 1234,
             ));
 
-            dd($boleto->getOutput());
+            $data = [
+                'subject' => "$customer[0], o boleto de sua cobrança já está pronto!",
+                'body' => 'Realize o download do boleto anexado neste e-mail e faça o pagamento.',
+                'file' => $this->convertHtmlToPdf($boleto->getOutput())
+            ];
 
-            // dd($drawer, $assignor);
-            // // $name = $customer[0];
-            // // $governmentId = $customer[1];
-            // // $email = $customer[2];
-            // // $debtAmount = $customer[3];
-            // // $debtDueDate = $customer[4];
-            // // $debtId = $customer[5];
+            $this->sendMail($data, $customer[2]);
         }
+    }
+
+    public function sendMail($data, $receiverEmail)
+    {
+        Mail::to($receiverEmail)->send(new TicketMail($data));
+
+        return 'Email sent successfully';
     }
 }
