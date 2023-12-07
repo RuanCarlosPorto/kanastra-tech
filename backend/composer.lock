@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "ea29946421b6177df8101b5da9d4bd1e",
     "packages": [
         {
             "name": "brick/math",
@@ -2390,6 +2390,60 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "openboleto/openboleto",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/openboleto/openboleto.git",
+                "reference": "2fa22045d58ab6fd90aa472f208ed07c4134787c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/openboleto/openboleto/zipball/2fa22045d58ab6fd90aa472f208ed07c4134787c",
+                "reference": "2fa22045d58ab6fd90aa472f208ed07c4134787c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "OpenBoleto\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "José Frederico",
+                    "email": "contato@livetechtecnologia.com.br"
+                },
+                {
+                    "name": "Daniel Garajau",
+                    "email": "daniel@garajau.com.br"
+                },
+                {
+                    "name": "Rogerio Muniz",
+                    "email": "rogerio@quilhasoft.com.br"
+                }
+            ],
+            "description": "Biblioteca para geração de boletos bancários.",
+            "homepage": "http://github.com/openboleto/openboleto",
+            "keywords": [
+                "boleto",
+                "boleto bancario"
+            ],
+            "support": {
+                "issues": "https://github.com/openboleto/openboleto/issues",
+                "source": "https://github.com/openboleto/openboleto/tree/master"
+            },
+            "time": "2022-12-21T02:37:12+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -8152,7 +8206,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "openboleto/openboleto": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
