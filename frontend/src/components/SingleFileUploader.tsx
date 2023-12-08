@@ -34,9 +34,9 @@ const SingleFileUploader = () => {
     const formData = new FormData();
     formData.append('input', file);
 
-    const data = await uploadFile(formData);
+    const response = await uploadFile(formData);
 
-    if (data) {
+    if (response) {
       dispatch({
         type: FileActionType.SET_IS_LOADING,
         payload: {
