@@ -3,5 +3,5 @@ export type File = {
     name: string;
     extension: string;
     size: string;
-    uploadedAt: Date;
+    created_at: Date;
 }

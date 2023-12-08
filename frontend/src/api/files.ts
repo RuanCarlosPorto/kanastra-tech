@@ -1,13 +1,26 @@
 import { File } from "../dtos/file";
 import axios from "axios";
 
-async function getFiles(): Promise<File[]> {
-    const data = await axios.get('http://localhost:8000/')
-        .then(response => {
-            return response.data;
-        });
+const API_URL = "http://localhost:8000";
 
-    return data;
+async function getFiles(): Promise<File[]> {
+  const data = await axios.get(`${API_URL}/file`)
+    .then(response => {
+      return response.data;
+    });
+
+  return data;
 }
 
-export default getFiles;
+async function uploadFile(formData: FormData) {
+  axios({
+    url: `${API_URL}/ticket`,
+    method: "POST",
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data: formData
+  });
+}
+
+export { getFiles, uploadFile };

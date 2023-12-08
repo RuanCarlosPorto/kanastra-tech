@@ -8,7 +8,8 @@ import {
   FileProviderProps,
 } from "@/types";
 
-import getFiles from "@/api/files";
+import { getFiles } from "@/api/files";
+import { useLocation } from "react-router-dom";
 
 export const FileContextInitialValues: Partial<FileContextState> = {
   file: {} as File,
@@ -43,7 +44,7 @@ const FileReducer = (
     case FileActionType.SET_IS_LOADING: {
       return {
         ...state,
-        isLoading: action.payload?.isLoading ?? false
+        isLoading: action.payload?.isLoading ? action.payload?.isLoading : false
       };
     }
     default: {
@@ -58,16 +59,21 @@ const FileProvider = ({ children }: FileProviderProps) => {
     FileContextInitialValues as FileContextState,
   );
 
+  const location = useLocation();
+
   useEffect(() => {
-    getFiles().then((file: any) => {
-      dispatch({
-        type: FileActionType.SET_FILE_LIST,
-        payload: {
-          fileList: file
-        }
+    const apiRequest = async () => {
+      getFiles().then((file: any) => {
+        dispatch({
+          type: FileActionType.SET_FILE_LIST,
+          payload: {
+            fileList: file
+          }
+        });
       });
-    });
-  })
+    }
+    apiRequest();
+  }, [location]);
 
   return (
     <FileContext.Provider value={{ state, dispatch }}>

@@ -1,23 +1,39 @@
 import { FileActionType } from "@/constants";
 import { useFileContext } from "@/context";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
+
+import { uploadFile } from "@/api/files";
 
 const SingleFileUploader = () => {
   const { state: { file }, dispatch } = useFileContext();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
+    if (e.target.files) {
       dispatch({
         type: FileActionType.SET_UPLOAD_FILE,
         payload: {
           file: e.target.files[0],
         }
-      })
+      });
     }
   };
 
   const handleUpload = async () => {
-    // Do your upload logic here. Remember to use the FileContext
+    if (!file) {
+      return;
+    }
+
+    dispatch({
+      type: FileActionType.SET_IS_LOADING,
+      payload: {
+        isLoading: true
+      }
+    });
+
+    const formData = new FormData();
+    formData.append('input', file);
+
+    await uploadFile(formData);
   };
 
   return (
