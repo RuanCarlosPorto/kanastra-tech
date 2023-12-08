@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Lib\Validator;
 use App\Models\File;
 use App\Services\TicketService;
+use Illuminate\Http\Response;
 
 class TicketController extends Controller
 {
@@ -32,10 +33,19 @@ class TicketController extends Controller
         $request['extension'] = explode('.', $fileName)[1];
         $request['size'] = $request->input->getSize();
 
-        $this->file->store($request->all());
-
         array_shift($file);
         
-        $this->ticketService->generate($file);
+        $response = $this->ticketService->generate($file);
+
+        if (!$response) {
+            return response()->json(
+                'We were unable to send the tickets',
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+
+        $this->file->store($request->all());
+
+        return $response;
     }
 }

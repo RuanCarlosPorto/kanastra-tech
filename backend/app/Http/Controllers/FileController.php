@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FileController extends Controller
 {
@@ -16,6 +17,15 @@ class FileController extends Controller
 
     public function index() 
     {
-        return $this->file->index();
+        $files = $this->file->index();
+        
+        if(!$files) {
+            return response()->json(
+                'We were unable to find any file',
+                Response::HTTP_NO_CONTENT
+            );
+        }
+
+        return $files;
     }
 }
