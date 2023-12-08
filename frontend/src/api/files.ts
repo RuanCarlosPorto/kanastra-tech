@@ -20,6 +20,10 @@ async function uploadFile(formData: FormData) {
       'Content-Type': 'multipart/form-data'
     },
     data: formData
+  }).then(response => {
+    return response.data;
+  }).catch(function (error) {
+    return error.toJSON();
   });
 
   return data;
