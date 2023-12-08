@@ -22,4 +22,5 @@ Route::prefix('ticket')->group(function() {
 
 Route::prefix('file')->group(function() {
     Route::get('/', [FileController::class, 'index']);
+    Route::post('/', [FileController::class, 'store']);
 });

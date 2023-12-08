@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->longText('content');
             $table->string('extension');
             $table->string('size');
             $table->timestamps();
