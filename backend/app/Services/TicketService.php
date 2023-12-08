@@ -20,9 +20,8 @@ class TicketService
 
     public function generate($csv)
     {
-        $csvHeader = array_shift($csv);
-
         foreach ($csv as $customer) {
+            $customer = explode(",", $customer);
             $drawer = new Agente($customer[0], '000.000.000-00', 'Teste', '00000-000', 'Teste', 'TS');
             $assignor = new Agente('Fake Bank', '00.000.000/0000-00', 'Teste', '00000-000', 'Teste', 'TS');
 
@@ -40,7 +39,6 @@ class TicketService
 
             $data = [
                 'subject' => "$customer[0], o boleto de sua cobrança já está pronto!",
-                'body' => 'Realize o download do boleto anexado neste e-mail e faça o pagamento.',
                 'file' => $this->convertHtmlToPdf($boleto->getOutput())
             ];
 
