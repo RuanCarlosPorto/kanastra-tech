@@ -13,7 +13,7 @@ async function getFiles(): Promise<File[]> {
 }
 
 async function uploadFile(formData: FormData) {
-  axios({
+  const data = axios({
     url: `${API_URL}/ticket`,
     method: "POST",
     headers: {
@@ -21,6 +21,8 @@ async function uploadFile(formData: FormData) {
     },
     data: formData
   });
+
+  return data;
 }
 
 export { getFiles, uploadFile };
